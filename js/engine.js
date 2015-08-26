@@ -14,6 +14,8 @@
  * a little simpler to work with.
  */
 
+
+
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -25,9 +27,10 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 1010; //505
+    canvas.height = 606; //606
     doc.body.appendChild(canvas);
+
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -45,12 +48,12 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        update(dt);
+        update(dt, canvas.width, canvas.height);
         render();
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
-         */
+         */ 
         lastTime = now;
 
         /* Use the browser's requestAnimationFrame function to call this
@@ -78,9 +81,9 @@ var Engine = (function(global) {
      * functionality this way (you could just implement collision detection
      * on the entities themselves within your app.js file).
      */
-    function update(dt) {
-        updateEntities(dt);
-        // checkCollisions();
+    function update(dt, canvasWidth, canvasHeigth ) {
+        updateEntities(dt, canvasWidth, canvasHeigth);
+        checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -90,11 +93,11 @@ var Engine = (function(global) {
      * the data/properties related to  the object. Do your drawing in your
      * render methods.
      */
-    function updateEntities(dt) {
+    function updateEntities(dt, canvasWidth, canvasHeigth) {
         allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
+            enemy.update(dt, canvasWidth);
         });
-        player.update();
+        player.update(canvasWidth, canvasHeigth);
     }
 
     /* This function initially draws the "game level", it will then call
@@ -116,7 +119,7 @@ var Engine = (function(global) {
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
-            numCols = 5,
+            numCols = 10,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -132,7 +135,7 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83); //101 * 83
             }
         }
 
@@ -182,3 +185,5 @@ var Engine = (function(global) {
      */
     global.ctx = ctx;
 })(this);
+
+ 
