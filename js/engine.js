@@ -138,7 +138,7 @@ var Engine = (function(global) {
             }
         }
 
-        ctx.drawImage(Resources.get('images/Selector.png'), 101,535);
+        
 
 
         renderEntities();
