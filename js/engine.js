@@ -25,7 +25,7 @@ var Engine = (function(global) {
         lastTime;
 
     canvas.width = 1010; //505
-    canvas.height = 606; //606
+    canvas.height = 706; //606
     doc.body.appendChild(canvas);
 
 
@@ -78,8 +78,8 @@ var Engine = (function(global) {
      * functionality this way (you could just implement collision detection
      * on the entities themselves within your app.js file).
      */
-    function update(dt, canvasWidth, canvasHeigth) {
-        updateEntities(dt, canvasWidth, canvasHeigth);
+    function update(dt) {
+        updateEntities(dt);
         checkCollisions();
     }
 
@@ -90,9 +90,9 @@ var Engine = (function(global) {
      * the data/properties related to  the object. Do your drawing in your
      * render methods.
      */
-    function updateEntities(dt, canvasWidth) {
+    function updateEntities(dt) {
         allEnemies.forEach(function(enemy) {
-            enemy.update(dt, canvasWidth);
+            enemy.update(dt);
         });
         player.update();
         //bridge.update();
@@ -138,6 +138,8 @@ var Engine = (function(global) {
             }
         }
 
+        ctx.drawImage(Resources.get('images/Selector.png'), 101,535);
+
 
         renderEntities();
     }
@@ -177,6 +179,7 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/char-boy.png',
         'images/bridge.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 
