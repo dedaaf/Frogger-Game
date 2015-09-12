@@ -88,6 +88,9 @@ Enemy.prototype.render = function() {
 ////////////////////////////////////////////////////////Bridge////////////////////////////////////////////////
 //Here the player must end to get the highest points.
 var Bridge = function() {
+    /* Creates a bridge object, so that it can be drawn on the canvas. 
+     * It is the goal to reach for the player.
+     */
     this.x = this.startingPositionX();
     this.y = 0;
 
@@ -150,6 +153,9 @@ Player.prototype.update = function() {
         if (this.x == bridge.rand) {
             console.log('Bridge reached');
             bridge.update(); //change the position of the bridge
+
+            //give points to the player.
+
         } else {
             this.y = 375; //move player back to orignal y position when it hits the water.     
         }
@@ -220,8 +226,6 @@ document.addEventListener('keyup', function(e) {
     level.handleInput(allowedKeys[e.keyCode]);
 });
 
-
-// Now instantiate your objects.
 //var enemyRow1 = new Enemy();
 //var enemyRow2 = new Enemy();
 //var enemyRow3 = new Enemy();
@@ -255,6 +259,9 @@ var lengthEnemyArray
 
 var amountEnemies = function(number) {
 
+    /* Creates a allEnemies array. It depends on the number the user has pressed 
+     * on the keyboard. The number is received from level.HandleInput function
+     */
     var minimalAmountEnemies = 3;
 
     switch (number) {
@@ -294,8 +301,12 @@ var amountEnemies = function(number) {
 
 console.log(lengthEnemyArray);
 
-//set difficulty level
+
 var Level = function() {
+    /* Create Level Object
+     * This object has three levels. Each level is drawn 
+     * on a smaller canvas, in the start menu
+     */
     this.x = 0;
     this.y;
     this.number = 0;
@@ -353,9 +364,12 @@ Level.prototype.handleInput = function(keyInput) {
 
 };
 
-var level = new Level();
+var level = new Level(); // Create instance of the Level Object
 
 var changeGameState = function(level) {
+    /* Alert user that a level is correctly selected. 
+     * After pressing the alert OK button the game will begin
+     */
     alert('You selected level ' + level + '. ' + 'Press OK to start the game');
     gameState = 'gameRun';
 };
@@ -364,8 +378,12 @@ var hitStatus = false; // There is no collision in the beginning
 
 //var lengthEnemyArray = allEnemies.length; //length array
 
-var checkCollisions = function() { //check for collisions between player and enemies
-    console.log(lengthEnemyArray);
+var checkCollisions = function() { 
+    /* Check if the player hits an enemy.
+     * The image location of the player and the image location of the enemy is compared.
+     * If the values cross each other there is a hit. And the player is returned 
+     * to the orginal position
+     */
     for (var i = 0; i < lengthEnemyArray; i++) {
 
         //Enemy left side
@@ -400,3 +418,4 @@ var checkCollisions = function() { //check for collisions between player and ene
 
     }
 };
+
