@@ -237,7 +237,7 @@ var hitStatus = false; // There is no collision in the beginning
 //var lengthEnemyArray = allEnemies.length; //length array
 
 var checkCollisions = function() { //check for collisions between player and enemies
-
+    console.log(allEnemies);
     for (var i = 0; i < lengthEnemyArray; i++) {
 
         //Enemy left side
@@ -303,6 +303,7 @@ var amountEnemies = function(number){
                 allEnemies[i] = new Enemy;
             
             }
+
             break;
 
         case 2:
@@ -328,8 +329,6 @@ var amountEnemies = function(number){
 }
 
 var lengthEnemyArray = allEnemies.length; //length array
-console.log(lengthEnemyArray);
-
 
     //set difficulty level
 var Level = function(){
@@ -345,7 +344,6 @@ Level.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-
 Level.prototype.handleInput = function(keyInput) {
  
     var key = keyInput;
@@ -354,8 +352,10 @@ Level.prototype.handleInput = function(keyInput) {
             console.log('Level 1 is set');
             this.x = 250;
             this.y=240;
-            this.number =1;
             amountEnemies(1);
+            this.render();
+            changeGameState(1);
+
             
             break; 
 
@@ -363,16 +363,18 @@ Level.prototype.handleInput = function(keyInput) {
              console.log('Level 2 is set');
             this.x = 101+250;
             this.y=240;
-            this.number =2;
             amountEnemies(2);
+            this.render();
+            changeGameState(2);
             break;
         
         case 'level_3':
             console.log('Level 3 is set');
             this.x = 202+250;
             this.y=240;
-            this.number =3;
             amountEnemies(3);
+            this.render();
+            changeGameState(3);
             break;
 
         default:
@@ -385,3 +387,8 @@ Level.prototype.handleInput = function(keyInput) {
 };
 
 var level = new Level();
+
+var changeGameState = function(level){
+    alert('You selected level '+level+'. ' + 'Press OK to start the game');
+   gameState = 'gameRun';
+}

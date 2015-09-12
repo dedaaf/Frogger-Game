@@ -13,6 +13,8 @@
  * the canvas' context (ctx) object globally available to make writing app.js
  * a little simpler to work with.
  */
+  var gameState = "startMenu";//the state of the game is set here for the first time.
+  
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -28,7 +30,7 @@ var Engine = (function(global) {
     canvas.height = 706; //606
     doc.body.appendChild(canvas);
 
-    var gameState = "gameRun";//the state of the game is set here for the first time.
+   
 
 
     /* This function serves as the kickoff point for the game loop itself
