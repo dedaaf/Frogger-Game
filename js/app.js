@@ -59,7 +59,9 @@ Enemy.prototype.startingPositionX = function() {
 //set starting position of each enemy on the y-axes
 // Create a random effect so that every enemy starts from a different pos.
 Enemy.prototype.startingPositionY = function() {
-
+    //Determine the starting position of the enemies by 
+    //randomly going through the array with the coordinates 
+    //of the x-axes
 
     //starting values on the y-axes
     var arrayYPosition = [60,140,220];
@@ -97,6 +99,10 @@ Bridge.prototype.render = function() {
 };
 
 Bridge.prototype.startingPositionX = function() {
+    //Determine the starting position of the enemies by 
+    //randomly going through the array with the coordinates 
+    //of the x-axes
+
 
     var arrayYPosition = [0,101,202,303,404,505,606,707,808,909];
     var arrayYPositionLength = arrayYPosition.length;
@@ -143,7 +149,7 @@ Player.prototype.update = function() {
         //check if player reaches bridge
         if(this.x == bridge.rand ){
             console.log('Bridge reached');
-            bridge.update();
+            bridge.update(); //change the position of the bridge
         }else{
             this.y = 375; //move player back to orignal y position when it hits the water.     
         }
@@ -190,7 +196,8 @@ Player.prototype.handleInput = function(keyInput) {
         this.y = this.y + 80;
         this.update();
     }
-    console.log(this.x );
+   
+    
 };
 
 ////////////////////////////////////////////////////////EVENTS////////////////////////////////////////////////
@@ -201,10 +208,16 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        
+        49: 'level_1', //different levels in the game
+        50: 'level_2',
+        51: 'level_3'
+        
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
+    level.handleInput(allowedKeys[e.keyCode]);
 });
 
 // Now instantiate your objects.
@@ -278,3 +291,75 @@ var startOver = function() { //Put everybody back into starting positions.
     player.y = 375;
     player.x = 303;
 };
+
+
+
+    //set difficulty level
+var Level = function(){
+    this.x = 0;
+    this.y;
+
+    this.sprite = 'images/Selector.png';
+
+}
+
+Level.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+
+        //    ctx.drawImage(Resources.get(), 202,504);
+         //   ctx.drawImage(Resources.get('images/Selector.png'), 0,504);
+          //  ctx.drawImage(Resources.get('images/Selector.png'), 101,504);
+
+
+
+Level.prototype.update = function() {
+   
+ 
+        this.x ;
+        level.y ;
+        
+       
+       
+    
+}
+Level.prototype.handleInput = function(keyInput) {
+ 
+    var key = keyInput;
+    switch(key){
+        case 'level_1':
+            console.log('Level 1 is set');
+            this.x = 250;
+            this.y=240;
+            
+            break; 
+
+        case 'level_2':
+             console.log('Level 2 is set');
+            this.x = 101+250;
+            this.y=240;
+            break;
+        
+        case 'level_3':
+            console.log('Level 3 is set');
+            this.x = 202+250;
+            this.y=240;
+            break;
+
+        default:
+            'No Level'
+            break;
+
+    }
+
+    
+};
+
+
+Level.prototype.checkChoice = function(){
+    
+    return this.handleInput();
+};
+
+var level = new Level();
