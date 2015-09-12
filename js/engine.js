@@ -28,7 +28,7 @@ var Engine = (function(global) {
     canvas.height = 706; //606
     doc.body.appendChild(canvas);
 
-    var gameState = "startMenu";//the state of the game is set here for the first time.
+    var gameState = "gameRun";//the state of the game is set here for the first time.
 
 
     /* This function serves as the kickoff point for the game loop itself
@@ -91,10 +91,9 @@ var Engine = (function(global) {
       
         switch (gameState) {
             case "startMenu":
-                // Is there anything you need to do?
-             //   level.update();
-                canvas.width = 1010; //505
-              //  canvas.height = 706; //606
+            //redraws the entire canvas. 
+            //Don't know why but i need it for the level select fucntion to work properly
+                canvas.width = 1010; 
                 break;
 
             case "gameRun":
@@ -146,7 +145,6 @@ var Engine = (function(global) {
                 break;
 
             case "gameRun":
-        
                 var rowImages = [
                         
                         'images/water-block.png', // Top row is water
@@ -231,4 +229,5 @@ var Engine = (function(global) {
      */
     global.ctx = ctx;
     global.gameState = gameState;
+    
 })(this);

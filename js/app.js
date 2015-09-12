@@ -220,20 +220,21 @@ document.addEventListener('keyup', function(e) {
     level.handleInput(allowedKeys[e.keyCode]);
 });
 
+
 // Now instantiate your objects.
-var enemyRow1 = new Enemy();
-var enemyRow2 = new Enemy();
-var enemyRow3 = new Enemy();
+//var enemyRow1 = new Enemy();
+//var enemyRow2 = new Enemy();
+//var enemyRow3 = new Enemy();
 
 // Place all enemy objects in an array called allEnemies
-var allEnemies = [enemyRow1, enemyRow2, enemyRow3];
+//allEnemies = [enemyRow1, enemyRow2, enemyRow3];
 
 // Place the player object in a variable called player
 var player = new Player();
 
 var hitStatus = false; // There is no collision in the beginning
 
-var lengthEnemyArray = allEnemies.length; //length array
+//var lengthEnemyArray = allEnemies.length; //length array
 
 var checkCollisions = function() { //check for collisions between player and enemies
 
@@ -270,10 +271,6 @@ var checkCollisions = function() { //check for collisions between player and ene
         }
 
     }
-
-
-
-
 };
 
 
@@ -292,12 +289,53 @@ var startOver = function() { //Put everybody back into starting positions.
     player.x = 303;
 };
 
+var allEnemies =[];
+var amountEnemies = function(number){
+    
+    var minimalAmountEnemies = 3; 
+
+    switch(number){
+        case 1:
+            allEnemies =[];
+            var numberEnemies = minimalAmountEnemies;
+
+            for (var i = 0; i < numberEnemies ; i++ ){
+                allEnemies[i] = new Enemy;
+            
+            }
+            break;
+
+        case 2:
+            allEnemies =[];
+            numberEnemies = 5;
+            for (var i = 0; i < numberEnemies ; i++ ){
+                allEnemies[i] = new Enemy;
+            
+            }
+            break;
+
+        case 3:
+            allEnemies =[];
+            numberEnemies = 8;
+            for (var i = 0; i < numberEnemies ; i++ ){
+                allEnemies[i] = new Enemy;
+            
+            }
+            break;
+    }
+    
+    
+}
+
+var lengthEnemyArray = allEnemies.length; //length array
+console.log(lengthEnemyArray);
 
 
     //set difficulty level
 var Level = function(){
     this.x = 0;
     this.y;
+    this.number = 0;
 
     this.sprite = 'images/Selector.png';
 
@@ -308,22 +346,6 @@ Level.prototype.render = function() {
 };
 
 
-        //    ctx.drawImage(Resources.get(), 202,504);
-         //   ctx.drawImage(Resources.get('images/Selector.png'), 0,504);
-          //  ctx.drawImage(Resources.get('images/Selector.png'), 101,504);
-
-
-
-Level.prototype.update = function() {
-   
- 
-        this.x ;
-        level.y ;
-        
-       
-       
-    
-}
 Level.prototype.handleInput = function(keyInput) {
  
     var key = keyInput;
@@ -332,6 +354,8 @@ Level.prototype.handleInput = function(keyInput) {
             console.log('Level 1 is set');
             this.x = 250;
             this.y=240;
+            this.number =1;
+            amountEnemies(1);
             
             break; 
 
@@ -339,12 +363,16 @@ Level.prototype.handleInput = function(keyInput) {
              console.log('Level 2 is set');
             this.x = 101+250;
             this.y=240;
+            this.number =2;
+            amountEnemies(2);
             break;
         
         case 'level_3':
             console.log('Level 3 is set');
             this.x = 202+250;
             this.y=240;
+            this.number =3;
+            amountEnemies(3);
             break;
 
         default:
@@ -354,12 +382,6 @@ Level.prototype.handleInput = function(keyInput) {
     }
 
     
-};
-
-
-Level.prototype.checkChoice = function(){
-    
-    return this.handleInput();
 };
 
 var level = new Level();
