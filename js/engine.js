@@ -13,8 +13,8 @@
  * the canvas' context (ctx) object globally available to make writing app.js
  * a little simpler to work with.
  */
-  var gameState = "startMenu";//the state of the game is set here for the first time.
-  
+var gameState = "startMenu"; //the state of the game is set here for the first time.
+
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -30,7 +30,7 @@ var Engine = (function(global) {
     canvas.height = 706; //606
     doc.body.appendChild(canvas);
 
-   
+
 
 
     /* This function serves as the kickoff point for the game loop itself
@@ -49,7 +49,7 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-         
+
         update(dt);
         render();
 
@@ -63,11 +63,11 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-        
-    
+
+
     }
 
-        
+
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
      * game loop.
@@ -76,7 +76,7 @@ var Engine = (function(global) {
         reset();
         lastTime = Date.now();
         main();
-        
+
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -90,12 +90,15 @@ var Engine = (function(global) {
      */
     function update(dt) {
 
-      
+
         switch (gameState) {
             case "startMenu":
-            //redraws the entire canvas. 
-            //Don't know why but i need it for the level select fucntion to work properly
-                canvas.width = 1010; 
+                //redraws the entire canvas. 
+                //Don't know why but i need it for the level select fucntion to work properly
+                canvas.width = 1010;
+                ctx.font = "28px Georgia";
+                ctx.fillStyle = "green";
+                ctx.fillText("Press 1,2 or 3 on your keyboard to set the difficult level", 100, 230);
                 break;
 
             case "gameRun":
@@ -104,7 +107,7 @@ var Engine = (function(global) {
                 break;
         }
     }
-                    
+
     /* This is called by the update function  and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
@@ -117,7 +120,7 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
-        
+
     }
 
     /* This function initially draws the "game level", it will then call
@@ -131,24 +134,24 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
 
-       switch (gameState) {
+        switch (gameState) {
             case "startMenu":
                 // Draw the title
-                var ground   =  'images/stone-block.png'; // Row 1 of 3 of stone
-                var selector =  'images/Selector.png';
+                var ground = 'images/stone-block.png'; // Row 1 of 3 of stone
+                var selector = 'images/Selector.png';
                 var y = 240;
-           
-                numCols =3;
-                
-                for(var col=0;col<numCols; col++){
-                    ctx.drawImage(Resources.get(ground), (col * 101)+250, 240); //101 * 83
+
+                numCols = 3;
+
+                for (var col = 0; col < numCols; col++) {
+                    ctx.drawImage(Resources.get(ground), (col * 101) + 250, 240); //101 * 83
                 }
                 level.render();
                 break;
 
             case "gameRun":
                 var rowImages = [
-                        
+
                         'images/water-block.png', // Top row is water
                         'images/stone-block.png', // Row 1 of 3 of stone
                         'images/stone-block.png', // Row 2 of 3 of stone
@@ -174,7 +177,7 @@ var Engine = (function(global) {
                          * we're using them over and over.
                          */
                         ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83); //101 * 83
-                        
+
                     }
                 }
                 renderEntities();
@@ -194,7 +197,7 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        
+
         player.render();
         bridge.render();
     }
@@ -204,10 +207,10 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-    
-           
-    
-  
+
+
+
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -231,5 +234,5 @@ var Engine = (function(global) {
      */
     global.ctx = ctx;
     global.gameState = gameState;
-    
+
 })(this);

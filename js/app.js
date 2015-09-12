@@ -37,8 +37,8 @@ Enemy.prototype.update = function(dt) {
         this.x = this.startingPositionX();
         this.speed = this.speedRandom(); // Change speed enemy after reaching end
 
-         this.y = this.startingPositionY();
-       
+        this.y = this.startingPositionY();
+
     }
 
 };
@@ -64,12 +64,12 @@ Enemy.prototype.startingPositionY = function() {
     //of the x-axes
 
     //starting values on the y-axes
-    var arrayYPosition = [60,140,220];
+    var arrayYPosition = [60, 140, 220];
     var arrayYPositionLength = arrayYPosition.length;
 
     var rand = arrayYPosition[Math.floor(Math.random() * (arrayYPositionLength))];
     return rand;
-   
+
 };
 
 Enemy.prototype.speedRandom = function() {
@@ -104,22 +104,22 @@ Bridge.prototype.startingPositionX = function() {
     //of the x-axes
 
 
-    var arrayYPosition = [0,101,202,303,404,505,606,707,808,909];
+    var arrayYPosition = [0, 101, 202, 303, 404, 505, 606, 707, 808, 909];
     var arrayYPositionLength = arrayYPosition.length;
 
     this.rand = arrayYPosition[Math.floor(Math.random() * (arrayYPositionLength))];
-    
+
     return this.rand; //use this rand in the player update function.
 };
 
 Bridge.prototype.update = function() {
-      
-      this.x = this.startingPositionX(); //change the position of the bridge
+
+    this.x = this.startingPositionX(); //change the position of the bridge
 
 }
 
 //create the bridge
-var bridge =  new Bridge();
+var bridge = new Bridge();
 
 ////////////////////////////////////////////////////////PLAYER////////////////////////////////////////////////
 // Now write your own player class
@@ -138,7 +138,7 @@ var Player = function() {
 };
 
 Player.prototype.update = function() {
-    
+
 
     if (this.x < 0) {
         this.x = 0;
@@ -147,17 +147,17 @@ Player.prototype.update = function() {
     if (this.y < 0) {
 
         //check if player reaches bridge
-        if(this.x == bridge.rand ){
+        if (this.x == bridge.rand) {
             console.log('Bridge reached');
             bridge.update(); //change the position of the bridge
-        }else{
+        } else {
             this.y = 375; //move player back to orignal y position when it hits the water.     
         }
         //new x-axes starting point can be developed here. ////
     }
 
-    if (this.x > 909 ) {
-        this.x = 909;//player cannot get of canvas on the right side.
+    if (this.x > 909) {
+        this.x = 909; //player cannot get of canvas on the right side.
     }
 
     if (this.y > 400) {
@@ -196,8 +196,8 @@ Player.prototype.handleInput = function(keyInput) {
         this.y = this.y + 80;
         this.update();
     }
-   
-    
+
+
 };
 
 ////////////////////////////////////////////////////////EVENTS////////////////////////////////////////////////
@@ -209,11 +209,11 @@ document.addEventListener('keyup', function(e) {
         38: 'up',
         39: 'right',
         40: 'down',
-        
+
         49: 'level_1', //different levels in the game
         50: 'level_2',
         51: 'level_3'
-        
+
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
@@ -232,46 +232,7 @@ document.addEventListener('keyup', function(e) {
 // Place the player object in a variable called player
 var player = new Player();
 
-var hitStatus = false; // There is no collision in the beginning
 
-//var lengthEnemyArray = allEnemies.length; //length array
-
-var checkCollisions = function() { //check for collisions between player and enemies
-    console.log(allEnemies);
-    for (var i = 0; i < lengthEnemyArray; i++) {
-
-        //Enemy left side
-        allEnemies[i].imageLeftSide = allEnemies[i].x;
-        //Enemy right side
-        allEnemies[i].imageRightSide= allEnemies[i].x + allEnemies[i].imageWidth ;
-        //Enemy up side
-        allEnemies[i].imageTopSide = allEnemies[i].y;
-        // Enemy down side
-        allEnemies[i].imageDownSide = allEnemies[i].y + allEnemies[i].imageHeigth;
-
-        //player left side
-        player.imageLeftSide = player.x;
-        //player right side
-        player.imageRightSide = player.x + player.imageWidth;
-        //player top side
-        player.imageTopSide = player.y;
-        //player downside
-        player.imageDownSide = player.y + player.imageHeigth;
-
-        hitStatus = !(
-
-            player.imageLeftSide > allEnemies[i].imageRightSide|| //check x-axes 
-            player.imageRightSide < allEnemies[i].imageLeftSide ||
-
-            player.imageTopSide > allEnemies[i].imageDownSide || //check y-axes
-            player.imageDownSide < allEnemies[i].imageTopSide);
-
-        if (hitStatus === true) {
-            startOver();
-        }
-
-    }
-};
 
 
 //if there is a hit process player.update and then these functions:
@@ -289,106 +250,153 @@ var startOver = function() { //Put everybody back into starting positions.
     player.x = 303;
 };
 
-var allEnemies =[];
-var amountEnemies = function(number){
-    
-    var minimalAmountEnemies = 3; 
+var allEnemies = [];
+var lengthEnemyArray 
 
-    switch(number){
+var amountEnemies = function(number) {
+
+    var minimalAmountEnemies = 3;
+
+    switch (number) {
         case 1:
-            allEnemies =[];
+            allEnemies = [];
             var numberEnemies = minimalAmountEnemies;
 
-            for (var i = 0; i < numberEnemies ; i++ ){
+            for (var i = 0; i < numberEnemies; i++) {
                 allEnemies[i] = new Enemy;
-            
-            }
 
+            }
+            lengthEnemyArray = allEnemies.length; //length array
             break;
 
         case 2:
-            allEnemies =[];
+            allEnemies = [];
             numberEnemies = 5;
-            for (var i = 0; i < numberEnemies ; i++ ){
+            for (var i = 0; i < numberEnemies; i++) {
                 allEnemies[i] = new Enemy;
-            
+
             }
+            lengthEnemyArray = allEnemies.length; //length array
             break;
 
         case 3:
-            allEnemies =[];
+            allEnemies = [];
             numberEnemies = 8;
-            for (var i = 0; i < numberEnemies ; i++ ){
+            for (var i = 0; i < numberEnemies; i++) {
                 allEnemies[i] = new Enemy;
-            
+
             }
+            lengthEnemyArray = allEnemies.length; //length array
             break;
     }
-    
-    
-}
+};
 
-var lengthEnemyArray = allEnemies.length; //length array
 
-    //set difficulty level
-var Level = function(){
+console.log(lengthEnemyArray);
+
+//set difficulty level
+var Level = function() {
     this.x = 0;
     this.y;
     this.number = 0;
 
     this.sprite = 'images/Selector.png';
 
-}
+};
 
 Level.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Level.prototype.handleInput = function(keyInput) {
- 
-    var key = keyInput;
-    switch(key){
-        case 'level_1':
-            console.log('Level 1 is set');
-            this.x = 250;
-            this.y=240;
-            amountEnemies(1);
-            this.render();
-            changeGameState(1);
+    /* This function lets the user set the difficult level. 
+     * It is only active when the gameState is in the startmenu mode
+     */
+     
+    if(gameState=='startMenu'){
+        var key = keyInput;
+        switch (key) {
+            case 'level_1':
+                console.log('Level 1 is set');
+                this.x = 250;
+                this.y = 240;
+                amountEnemies(1);
+                this.render();
+                changeGameState(1);
+                break;
 
-            
-            break; 
+            case 'level_2':
+                console.log('Level 2 is set');
+                this.x = 101 + 250;
+                this.y = 240;
+                amountEnemies(2);
+                this.render();
+                changeGameState(2);
+                break;
 
-        case 'level_2':
-             console.log('Level 2 is set');
-            this.x = 101+250;
-            this.y=240;
-            amountEnemies(2);
-            this.render();
-            changeGameState(2);
-            break;
-        
-        case 'level_3':
-            console.log('Level 3 is set');
-            this.x = 202+250;
-            this.y=240;
-            amountEnemies(3);
-            this.render();
-            changeGameState(3);
-            break;
+            case 'level_3':
+                console.log('Level 3 is set');
+                this.x = 202 + 250;
+                this.y = 240;
+                amountEnemies(3);
+                this.render();
+                changeGameState(3);
+                break;
 
-        default:
-            'No Level'
-            break;
+            default:
+                console.log('No Level Selected');
+                break;
 
+        }
     }
 
-    
+
 };
 
 var level = new Level();
 
-var changeGameState = function(level){
-    alert('You selected level '+level+'. ' + 'Press OK to start the game');
-   gameState = 'gameRun';
-}
+var changeGameState = function(level) {
+    alert('You selected level ' + level + '. ' + 'Press OK to start the game');
+    gameState = 'gameRun';
+};
+
+var hitStatus = false; // There is no collision in the beginning
+
+//var lengthEnemyArray = allEnemies.length; //length array
+
+var checkCollisions = function() { //check for collisions between player and enemies
+    console.log(lengthEnemyArray);
+    for (var i = 0; i < lengthEnemyArray; i++) {
+
+        //Enemy left side
+        allEnemies[i].imageLeftSide = allEnemies[i].x;
+        //Enemy right side
+        allEnemies[i].imageRightSide = allEnemies[i].x + allEnemies[i].imageWidth;
+        //Enemy up side
+        allEnemies[i].imageTopSide = allEnemies[i].y;
+        // Enemy down side
+        allEnemies[i].imageDownSide = allEnemies[i].y + allEnemies[i].imageHeigth;
+
+        //player left side
+        player.imageLeftSide = player.x;
+        //player right side
+        player.imageRightSide = player.x + player.imageWidth;
+        //player top side
+        player.imageTopSide = player.y;
+        //player downside
+        player.imageDownSide = player.y + player.imageHeigth;
+
+        hitStatus = !(
+
+            player.imageLeftSide > allEnemies[i].imageRightSide || //check x-axes 
+            player.imageRightSide < allEnemies[i].imageLeftSide ||
+
+            player.imageTopSide > allEnemies[i].imageDownSide || //check y-axes
+            player.imageDownSide < allEnemies[i].imageTopSide);
+
+        if (hitStatus === true) {
+            startOver();
+        }
+
+    }
+};
