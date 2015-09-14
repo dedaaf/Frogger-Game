@@ -97,13 +97,14 @@ var Engine = (function(global) {
                 //Don't know why but i need it for the level select fucntion to work properly
                 canvas.width = 1010;
                 ctx.font = "28px Georgia";
-                ctx.fillStyle = "green";
-                ctx.fillText("Press 1,2 or 3 on your keyboard to set the difficult level", 100, 230);
+    ctx.fillStyle = "black";
+    ctx.fillText("Press 1,2 or 3 on your keyboard to start the game", 140, 250);
                 break;
 
             case "gameRun":
                 updateEntities(dt);
                 checkCollisions();
+                
                 break;
         }
     }
@@ -120,7 +121,6 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
-
     }
 
     /* This function initially draws the "game level", it will then call
@@ -146,7 +146,7 @@ var Engine = (function(global) {
                 for (var col = 0; col < numCols; col++) {
                     ctx.drawImage(Resources.get(ground), (col * 101) + 250, 240); //101 * 83
                 }
-                level.render();
+                level.render();//print the selected level on the screen
                 break;
 
             case "gameRun":
@@ -198,8 +198,10 @@ var Engine = (function(global) {
         });
 
 
+        
         player.render();
         bridge.render();
+
     }
 
     /* This function does nothing but it could have been a good place to

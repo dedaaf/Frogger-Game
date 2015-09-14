@@ -119,7 +119,7 @@ Bridge.prototype.update = function() {
 
     this.x = this.startingPositionX(); //change the position of the bridge
 
-}
+};
 
 //create the bridge
 var bridge = new Bridge();
@@ -152,12 +152,19 @@ Player.prototype.update = function() {
         //check if player reaches bridge
         if (this.x == bridge.rand) {
             console.log('Bridge reached');
-            bridge.update(); //change the position of the bridge
+            goal=true; //goal is reached
 
             //give points to the player.
+            score.calculatePoints();
+            bridge.update(); //change the position of the bridge
+            this.y = 375; //change position player back to begin.
 
         } else {
-            this.y = 375; //move player back to orignal y position when it hits the water.     
+            console.log('Drowned :(');
+            score.calculatePoints();
+            this.y = 375; //move player back to orignal y position when it hits the water.
+            goal=false; //goal is NOT reached     
+            
         }
         //new x-axes starting point can be developed here. ////
     }
@@ -298,10 +305,6 @@ var amountEnemies = function(number) {
     }
 };
 
-
-console.log(lengthEnemyArray);
-
-
 var Level = function() {
     /* Create Level Object
      * This object has three levels. Each level is drawn 
@@ -419,3 +422,39 @@ var checkCollisions = function() {
     }
 };
 
+var totalScore =0;
+var goal = false;
+
+var Score = function(){
+    this.points =  0 ;
+}
+
+Score.prototype.calculatePoints = function(){
+    /* This function calculates the point when the goal (bridge),
+     * is reached. After that the score is displayed on the scoreboard
+     */
+    if(goal==true){
+        this.points += 10;
+         totalScore = this.points;
+          this.printScore();
+    }
+
+    if(goal==false){
+        this.points -= 10;     
+         totalScore = this.points; 
+         this.printScore();
+    }
+    
+
+};
+
+
+Score.prototype.printScore = function(){
+    console.log('totalScore: ',totalScore);
+    $('#score').replaceWith('<span id="score">'+ totalScore+ '</span');
+    
+    
+};
+
+
+score = new Score();
