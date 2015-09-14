@@ -95,7 +95,9 @@ var Engine = (function(global) {
                 canvas.width = 1010;
                 ctx.font = "28px Georgia";
                 ctx.fillStyle = "black";
-                ctx.fillText("Press 1,2 or 3 on your keyboard to start the game", 140, 250);
+                ctx.fillText("!!!!Reach for the BRIDGE!!!", 140, 470);
+                ctx.fillText("Press 1,2 or 3 on your keyboard to start the game", 140, 500);
+                ctx.fillText("With each level increase you can gain more points", 140, 530);
                 break;
 
             case "gameRun":
@@ -117,6 +119,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
+        
         player.update();
     }
 
@@ -195,9 +198,10 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
+        
         player.render();
         bridge.render();
+        
 
     }
 

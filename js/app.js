@@ -29,8 +29,8 @@ var Enemy = function() {
     this.y = this.startingPositionY();
     this.speed = this.speedRandom(); // speed of enemy
 
-    this.imageWidth = 50;
-    this.imageHeigth = 50;
+    this.imageWidth = 80;
+    this.imageHeigth = 66;
 };
 
 // Update the enemy's position, required method for game
@@ -116,18 +116,18 @@ Bridge.prototype.startingPositionX = function() {
     //randomly going through the array with the coordinates 
     //of the x-axes
 
-
     var arrayYPosition = [0, 101, 202, 303, 404, 505, 606, 707, 808, 909];
     var arrayYPositionLength = arrayYPosition.length;
 
-    this.rand = arrayYPosition[Math.floor(Math.random() * (arrayYPositionLength))];
-
-    return this.rand; //use this rand in the player update function.
+    this.randomPos = arrayYPosition[Math.floor(Math.random() * (arrayYPositionLength))];
+    
+    return this.randomPos; //use this rand in the player update function.
 };
 
 Bridge.prototype.update = function() {
-
-    this.x = this.startingPositionX(); //change the position of the bridge
+    
+    this.x =  this.startingPositionX(); //change the position of the bridge
+ 
 
 };
 
@@ -147,7 +147,7 @@ var Player = function() {
     this.y = this.startingPositionY; //starting location y-axes
 
     this.imageWidth = 50;
-    this.imageHeigth = 90;
+    this.imageHeigth = 80;
 };
 
 Player.prototype.update = function() {
@@ -159,24 +159,9 @@ Player.prototype.update = function() {
 
     if (this.y < 0) {
 
-        //check if player reaches bridge
-        if (this.x == bridge.rand) {
-            console.log('Bridge reached');
-            goal = true; //goal is reached
-
-            //give points to the player.
-            score.calculatePoints();
-            bridge.update(); //change the position of the bridge
-            this.y = 375; //change position player back to begin.
-
-        } else {
-            console.log('Drowned :(');
-            score.calculatePoints();
-            this.y = 375; //move player back to orignal y position when it hits the water.
-            goal = false; //goal is NOT reached     
-
-        }
-        //new x-axes starting point can be developed here. ////
+        checkFinish(); //go to function to check conditions for the finish
+        this.y = 375; //change position player back to begin.
+       
     }
 
     if (this.x > 909) {
@@ -224,8 +209,10 @@ Player.prototype.handleInput = function(keyInput) {
 };
 
 ////////////////////////////////////////////////////////EVENTS////////////////////////////////////////////////
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
+
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -237,7 +224,7 @@ document.addEventListener('keyup', function(e) {
         50: 'level_2',
         51: 'level_3',
 
-        27: 'Restart_game'
+        27: 'Restart_game' //restarts the game
 
 
     };
@@ -300,81 +287,6 @@ var amountEnemies = function(number) {
     }
 };
 
-var Level = function() {
-    /* Create Level Object
-     * This object has three levels. Each level is drawn 
-     * on a smaller canvas, in the start menu
-     */
-    this.x = 0;
-
-    this.number = 0;
-
-    this.sprite = 'images/Selector.png';
-
-};
-
-Level.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-Level.prototype.handleInput = function(keyInput) {
-    /* This function lets the user set the difficult level. 
-     * It is only active when the gameState is in the startmenu mode
-     */
-        var key = keyInput;
-    if (gameState == 'startMenu') {
-        
-        switch (key) {
-            case 'level_1':
-                console.log('Level 1 is set');
-                this.x = 250;
-                this.y = 240;
-                amountEnemies(1);
-                this.render();
-                changeGameState(1);
-                break;
-
-            case 'level_2':
-                console.log('Level 2 is set');
-                this.x = 101 + 250;
-                this.y = 240;
-                amountEnemies(2);
-                this.render();
-                changeGameState(2);
-                break;
-
-            case 'level_3':
-                console.log('Level 3 is set');
-                this.x = 202 + 250;
-                this.y = 240;
-                amountEnemies(3);
-                this.render();
-                changeGameState(3);
-                break;
-
-           
-
-            default:
-                console.log('No Level Selected');
-                break;
-
-        }
-    }else{
-        switch (key) {
-            case 'Restart_game':
-                console.log('resetgame');
-                gameState='startMenu';
-                totalScore = 0;
-                score.printScore();
-                break;
-        }
-
-    }
-
-
-};
-
-var level = new Level(); // Create instance of the Level Object
 
 var changeGameState = function(level) {
     /* Alert user that a level is correctly selected. 
@@ -386,16 +298,16 @@ var changeGameState = function(level) {
 
 var hitStatus = false; // There is no collision in the beginning
 
-//var lengthEnemyArray = allEnemies.length; //length array
-
 var checkCollisions = function() {
     /* Check if the player hits an enemy.
      * The image location of the player and the image location of the enemy is compared.
      * If the values cross each other there is a hit. And the player is returned 
      * to the orginal position
      */
-    for (var i = 0; i < lengthEnemyArray; i++) {
 
+    
+    for (var i = 0; i < lengthEnemyArray; i++) {
+    
         //Enemy left side
         allEnemies[i].imageLeftSide = allEnemies[i].x;
         //Enemy right side
@@ -423,41 +335,165 @@ var checkCollisions = function() {
             player.imageDownSide < allEnemies[i].imageTopSide);
 
         if (hitStatus === true) {
+            score.calculatePoints();
             startOver();
         }
 
     }
 };
 
+var checkFinish = function(){
+
+        //check if player reaches bridge
+        if (player.x == bridge.x) {
+            console.log('Bridge reached');
+            goal = true; //goal is reached
+
+            //give points to the player.
+            score.calculatePoints();
+
+            bridge.update(); //change the position of the bridge
+            console.log(bridge.x,player.x,goal);
+            
+        } else {
+            console.log('Drowned :(');
+            goal = false; //goal is NOT reached     
+            score.calculatePoints();
+            this.y = 375; //move player back to orignal y position when it hits the water.
+        }
+        //new x-axes starting point can be developed here. ////
+}
+
+////////////////////////////////////////////////////////LEVEL////////////////////////////////////////////////
+var Level = function() {
+    /* Create Level Object
+     * This object has three levels. Each level is drawn 
+     * on a smaller canvas, in the start menu
+     */
+    this.x = 0;
+
+    this.number = 0;
+
+    this.sprite = 'images/Selector.png';
+
+};
+
+Level.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Level.prototype.handleInput = function(keyInput) {
+    /* This function lets the user set the difficult level. 
+     * It is only active when the gameState is in the startmenu mode
+     */
+    var key = keyInput;
+    if (window.gameState == 'startMenu') {
+        
+        switch (key) {
+            case 'level_1':
+                console.log('Level 1 is set');
+                this.x = 250;
+                this.y = 240;
+                amountEnemies(1);
+                this.render();
+                changeGameState(1);
+                this.number=1;
+                break;
+
+            case 'level_2':
+                console.log('Level 2 is set');
+                this.x = 101 + 250;
+                this.y = 240;
+                amountEnemies(2);
+                this.render();
+                changeGameState(2);
+                this.number=2;
+                break;
+
+            case 'level_3':
+                console.log('Level 3 is set');
+                this.x = 202 + 250;
+                this.y = 240;
+                this.number=3;
+                amountEnemies(this.number);
+                this.render();
+                changeGameState(this.number);
+                break;
+
+            default:
+                console.log('No Level Selected');
+                break;
+
+        }
+    }else{
+        switch (key) {
+            case 'Restart_game':
+                gameState='startMenu';// set game back to start menu
+                totalScore = 0;
+                score.points=0;
+                score.printScore(); //set totalscore to zero.
+                break;
+        }
+
+    }
+
+
+};
+
+var level = new Level(); // Create instance of the Level Object
+
+
+////////////////////////////////////////////////////////SCORE////////////////////////////////////////////////
+
 var totalScore = 0;
 var goal = false;
-////////////////////////////////////////////////////////SCORE////////////////////////////////////////////////
+
 var Score = function() {
     this.points = 0;
 };
 
 Score.prototype.calculatePoints = function() {
     /* This function calculates the point when the goal (bridge),
-     * is reached. After that the score is displayed on the scoreboard
+     * is reached. After that the score is displayed on the scoreboard.
+     * It also checks if there is a collision (hitStatus), if so substract a couple of points.
+     * Furthermore, the value of the variable pointPerLevel is determined by the level that is set
      */
-    if (goal === true) {
-        this.points += 10;
-        totalScore = this.points;
-        this.printScore();
+    var pointPerLevel =0;
+    if  (level.number==1){ 
+        pointPerLevel = 5;
+    }
+    else if(level.number==2){
+        pointPerLevel = 10;
+
+    }else if(level.number==3){
+        pointPerLevel = 20;
     }
 
-    if (goal === false) {
-        this.points -= 10;
-        totalScore = this.points;
-        this.printScore();
+
+
+    if (goal === true && hitStatus===false) {
+        this.points += pointPerLevel;
     }
 
+    if (goal === false && hitStatus===false) {
+        this.points  = 0; //reset all point because the player drowned
+    }
+
+    if( hitStatus===true){
+        this.points -= 2;
+
+        if (this.points <0){
+            this.points=0;
+        }
+    }
+
+    totalScore = this.points;
+    this.printScore();
 
 };
 
 
 Score.prototype.printScore = function() {
-    console.log('totalScore: ', totalScore);
     $('#score').replaceWith('<span id="score">' + totalScore + '</span');
     $('#help').replaceWith('<div id="help"> Press the escape key to restart the game </div');
 
