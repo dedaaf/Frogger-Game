@@ -8,6 +8,16 @@
 //
 // Additionally, you can toggle specific options in the Configure
 // menu.
+// Hello.
+//
+// This is JSHint, a tool that helps to detect errors and potential
+// problems in your JavaScript code.
+//
+// To start, simply enter some JavaScript anywhere on this page. Your
+// report will appear on the right side.
+//
+// Additionally, you can toggle specific options in the Configure
+// menu.
 // This app creates the elements for the Frogger game.
 // The elements are displayed on a HTML5 Canvas generated via the engine.js.
 // The resources are loaded from the resources.js file and used by the engine.
@@ -120,14 +130,14 @@ Bridge.prototype.startingPositionX = function() {
     var arrayYPositionLength = arrayYPosition.length;
 
     this.randomPos = arrayYPosition[Math.floor(Math.random() * (arrayYPositionLength))];
-    
+
     return this.randomPos; //use this rand in the player update function.
 };
 
 Bridge.prototype.update = function() {
-    
-    this.x =  this.startingPositionX(); //change the position of the bridge
- 
+
+    this.x = this.startingPositionX(); //change the position of the bridge
+
 
 };
 
@@ -161,7 +171,7 @@ Player.prototype.update = function() {
 
         checkFinish(); //go to function to check conditions for the finish
         this.y = 375; //change position player back to begin.
-       
+
     }
 
     if (this.x > 909) {
@@ -305,9 +315,9 @@ var checkCollisions = function() {
      * to the orginal position
      */
 
-    
+
     for (var i = 0; i < lengthEnemyArray; i++) {
-    
+
         //Enemy left side
         allEnemies[i].imageLeftSide = allEnemies[i].x;
         //Enemy right side
@@ -342,27 +352,27 @@ var checkCollisions = function() {
     }
 };
 
-var checkFinish = function(){
+var checkFinish = function() {
 
-        //check if player reaches bridge
-        if (player.x == bridge.x) {
-            console.log('Bridge reached');
-            goal = true; //goal is reached
+    //check if player reaches bridge
+    if (player.x == bridge.x) {
+        console.log('Bridge reached');
+        goal = true; //goal is reached
 
-            //give points to the player.
-            score.calculatePoints();
+        //give points to the player.
+        score.calculatePoints();
 
-            bridge.update(); //change the position of the bridge
-            console.log(bridge.x,player.x,goal);
-            
-        } else {
-            console.log('Drowned :(');
-            goal = false; //goal is NOT reached     
-            score.calculatePoints();
-            this.y = 375; //move player back to orignal y position when it hits the water.
-        }
-        //new x-axes starting point can be developed here. ////
-}
+        bridge.update(); //change the position of the bridge
+        console.log(bridge.x, player.x, goal);
+
+    } else {
+        console.log('Drowned :(');
+        goal = false; //goal is NOT reached     
+        score.calculatePoints();
+        this.y = 375; //move player back to orignal y position when it hits the water.
+    }
+    //new x-axes starting point can be developed here. ////
+};
 
 ////////////////////////////////////////////////////////LEVEL////////////////////////////////////////////////
 var Level = function() {
@@ -388,7 +398,7 @@ Level.prototype.handleInput = function(keyInput) {
      */
     var key = keyInput;
     if (window.gameState == 'startMenu') {
-        
+
         switch (key) {
             case 'level_1':
                 console.log('Level 1 is set');
@@ -397,7 +407,7 @@ Level.prototype.handleInput = function(keyInput) {
                 amountEnemies(1);
                 this.render();
                 changeGameState(1);
-                this.number=1;
+                this.number = 1;
                 break;
 
             case 'level_2':
@@ -407,14 +417,14 @@ Level.prototype.handleInput = function(keyInput) {
                 amountEnemies(2);
                 this.render();
                 changeGameState(2);
-                this.number=2;
+                this.number = 2;
                 break;
 
             case 'level_3':
                 console.log('Level 3 is set');
                 this.x = 202 + 250;
                 this.y = 240;
-                this.number=3;
+                this.number = 3;
                 amountEnemies(this.number);
                 this.render();
                 changeGameState(this.number);
@@ -425,12 +435,12 @@ Level.prototype.handleInput = function(keyInput) {
                 break;
 
         }
-    }else{
+    } else {
         switch (key) {
             case 'Restart_game':
-                gameState='startMenu';// set game back to start menu
+                gameState = 'startMenu'; // set game back to start menu
                 totalScore = 0;
-                score.points=0;
+                score.points = 0;
                 score.printScore(); //set totalscore to zero.
                 break;
         }
@@ -458,32 +468,31 @@ Score.prototype.calculatePoints = function() {
      * It also checks if there is a collision (hitStatus), if so substract a couple of points.
      * Furthermore, the value of the variable pointPerLevel is determined by the level that is set
      */
-    var pointPerLevel =0;
-    if  (level.number==1){ 
+    var pointPerLevel = 0;
+    if (level.number == 1) {
         pointPerLevel = 5;
-    }
-    else if(level.number==2){
+    } else if (level.number == 2) {
         pointPerLevel = 10;
 
-    }else if(level.number==3){
+    } else if (level.number == 3) {
         pointPerLevel = 20;
     }
 
 
 
-    if (goal === true && hitStatus===false) {
+    if (goal === true && hitStatus === false) {
         this.points += pointPerLevel;
     }
 
-    if (goal === false && hitStatus===false) {
-        this.points  = 0; //reset all point because the player drowned
+    if (goal === false && hitStatus === false) {
+        this.points = 0; //reset all point because the player drowned
     }
 
-    if( hitStatus===true){
+    if (hitStatus === true) {
         this.points -= 2;
 
-        if (this.points <0){
-            this.points=0;
+        if (this.points < 0) {
+            this.points = 0;
         }
     }
 

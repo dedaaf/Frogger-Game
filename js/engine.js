@@ -119,7 +119,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        
+
         player.update();
     }
 
@@ -142,7 +142,7 @@ var Engine = (function(global) {
                 var y = 240;
 
                 var numCols = 3;
-                var col, row, numRow;
+                var col, row, numRows;
 
                 for (col = 0; col < numCols; col++) {
                     ctx.drawImage(Resources.get(ground), (col * 101) + 250, 240); //101 * 83
@@ -198,10 +198,10 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-        
+
         player.render();
         bridge.render();
-        
+
 
     }
 
