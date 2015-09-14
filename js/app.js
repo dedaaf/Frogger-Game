@@ -1,3 +1,13 @@
+// Hello.
+//
+// This is JSHint, a tool that helps to detect errors and potential
+// problems in your JavaScript code.
+//
+// To start, simply enter some JavaScript anywhere on this page. Your
+// report will appear on the right side.
+//
+// Additionally, you can toggle specific options in the Configure
+// menu.
 // This app creates the elements for the Frogger game.
 // The elements are displayed on a HTML5 Canvas generated via the engine.js.
 // The resources are loaded from the resources.js file and used by the engine.
@@ -152,7 +162,7 @@ Player.prototype.update = function() {
         //check if player reaches bridge
         if (this.x == bridge.rand) {
             console.log('Bridge reached');
-            goal=true; //goal is reached
+            goal = true; //goal is reached
 
             //give points to the player.
             score.calculatePoints();
@@ -163,8 +173,8 @@ Player.prototype.update = function() {
             console.log('Drowned :(');
             score.calculatePoints();
             this.y = 375; //move player back to orignal y position when it hits the water.
-            goal=false; //goal is NOT reached     
-            
+            goal = false; //goal is NOT reached     
+
         }
         //new x-axes starting point can be developed here. ////
     }
@@ -244,17 +254,6 @@ document.addEventListener('keyup', function(e) {
 var player = new Player();
 
 
-
-
-//if there is a hit process player.update and then these functions:
-var procesHit = function() {
-
-    if (hitStatus === true) {
-        setTimeout(startOver, 500); //take the hit like a boy
-    }
-
-};
-
 var startOver = function() { //Put everybody back into starting positions.
 
     player.y = 375;
@@ -262,7 +261,7 @@ var startOver = function() { //Put everybody back into starting positions.
 };
 
 var allEnemies = [];
-var lengthEnemyArray 
+var lengthEnemyArray;
 
 var amountEnemies = function(number) {
 
@@ -277,7 +276,7 @@ var amountEnemies = function(number) {
             var numberEnemies = minimalAmountEnemies;
 
             for (var i = 0; i < numberEnemies; i++) {
-                allEnemies[i] = new Enemy;
+                allEnemies[i] = new Enemy();
 
             }
             lengthEnemyArray = allEnemies.length; //length array
@@ -286,8 +285,8 @@ var amountEnemies = function(number) {
         case 2:
             allEnemies = [];
             numberEnemies = 5;
-            for (var i = 0; i < numberEnemies; i++) {
-                allEnemies[i] = new Enemy;
+            for (i = 0; i < numberEnemies; i++) {
+                allEnemies[i] = new Enemy();
 
             }
             lengthEnemyArray = allEnemies.length; //length array
@@ -296,8 +295,8 @@ var amountEnemies = function(number) {
         case 3:
             allEnemies = [];
             numberEnemies = 8;
-            for (var i = 0; i < numberEnemies; i++) {
-                allEnemies[i] = new Enemy;
+            for (i = 0; i < numberEnemies; i++) {
+                allEnemies[i] = new Enemy();
 
             }
             lengthEnemyArray = allEnemies.length; //length array
@@ -311,7 +310,7 @@ var Level = function() {
      * on a smaller canvas, in the start menu
      */
     this.x = 0;
-    this.y;
+
     this.number = 0;
 
     this.sprite = 'images/Selector.png';
@@ -326,8 +325,8 @@ Level.prototype.handleInput = function(keyInput) {
     /* This function lets the user set the difficult level. 
      * It is only active when the gameState is in the startmenu mode
      */
-     
-    if(gameState=='startMenu'){
+
+    if (gameState == 'startMenu') {
         var key = keyInput;
         switch (key) {
             case 'level_1':
@@ -381,7 +380,7 @@ var hitStatus = false; // There is no collision in the beginning
 
 //var lengthEnemyArray = allEnemies.length; //length array
 
-var checkCollisions = function() { 
+var checkCollisions = function() {
     /* Check if the player hits an enemy.
      * The image location of the player and the image location of the enemy is compared.
      * If the values cross each other there is a hit. And the player is returned 
@@ -422,38 +421,38 @@ var checkCollisions = function() {
     }
 };
 
-var totalScore =0;
+var totalScore = 0;
 var goal = false;
 
-var Score = function(){
-    this.points =  0 ;
-}
+var Score = function() {
+    this.points = 0;
+};
 
-Score.prototype.calculatePoints = function(){
+Score.prototype.calculatePoints = function() {
     /* This function calculates the point when the goal (bridge),
      * is reached. After that the score is displayed on the scoreboard
      */
-    if(goal==true){
+    if (goal === true) {
         this.points += 10;
-         totalScore = this.points;
-          this.printScore();
+        totalScore = this.points;
+        this.printScore();
     }
 
-    if(goal==false){
-        this.points -= 10;     
-         totalScore = this.points; 
-         this.printScore();
+    if (goal === false) {
+        this.points -= 10;
+        totalScore = this.points;
+        this.printScore();
     }
-    
+
 
 };
 
 
-Score.prototype.printScore = function(){
-    console.log('totalScore: ',totalScore);
-    $('#score').replaceWith('<span id="score">'+ totalScore+ '</span');
-    
-    
+Score.prototype.printScore = function() {
+    console.log('totalScore: ', totalScore);
+    $('#score').replaceWith('<span id="score">' + totalScore + '</span');
+
+
 };
 
 
