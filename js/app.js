@@ -146,7 +146,7 @@ var Player = function() {
     this.x = 0; //starting location x-axes
     this.y = this.startingPositionY; //starting location y-axes
 
-    this.imageWidth = 90;
+    this.imageWidth = 50;
     this.imageHeigth = 90;
 };
 
@@ -235,7 +235,10 @@ document.addEventListener('keyup', function(e) {
 
         49: 'level_1', //different levels in the game
         50: 'level_2',
-        51: 'level_3'
+        51: 'level_3',
+
+        27: 'Restart_game'
+
 
     };
 
@@ -318,9 +321,9 @@ Level.prototype.handleInput = function(keyInput) {
     /* This function lets the user set the difficult level. 
      * It is only active when the gameState is in the startmenu mode
      */
-
-    if (gameState == 'startMenu') {
         var key = keyInput;
+    if (gameState == 'startMenu') {
+        
         switch (key) {
             case 'level_1':
                 console.log('Level 1 is set');
@@ -349,11 +352,23 @@ Level.prototype.handleInput = function(keyInput) {
                 changeGameState(3);
                 break;
 
+           
+
             default:
                 console.log('No Level Selected');
                 break;
 
         }
+    }else{
+        switch (key) {
+            case 'Restart_game':
+                console.log('resetgame');
+                gameState='startMenu';
+                totalScore = 0;
+                score.printScore();
+                break;
+        }
+
     }
 
 
@@ -416,7 +431,7 @@ var checkCollisions = function() {
 
 var totalScore = 0;
 var goal = false;
-
+////////////////////////////////////////////////////////SCORE////////////////////////////////////////////////
 var Score = function() {
     this.points = 0;
 };
@@ -444,6 +459,7 @@ Score.prototype.calculatePoints = function() {
 Score.prototype.printScore = function() {
     console.log('totalScore: ', totalScore);
     $('#score').replaceWith('<span id="score">' + totalScore + '</span');
+    $('#help').replaceWith('<div id="help"> Press the escape key to restart the game </div');
 
 
 };
