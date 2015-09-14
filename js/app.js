@@ -243,13 +243,6 @@ document.addEventListener('keyup', function(e) {
     level.handleInput(allowedKeys[e.keyCode]);
 });
 
-//var enemyRow1 = new Enemy();
-//var enemyRow2 = new Enemy();
-//var enemyRow3 = new Enemy();
-
-// Place all enemy objects in an array called allEnemies
-//allEnemies = [enemyRow1, enemyRow2, enemyRow3];
-
 // Place the player object in a variable called player
 var player = new Player();
 
