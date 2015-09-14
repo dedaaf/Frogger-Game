@@ -30,9 +30,6 @@ var Engine = (function(global) {
     canvas.height = 706; //606
     doc.body.appendChild(canvas);
 
-
-
-
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -97,14 +94,14 @@ var Engine = (function(global) {
                 //Don't know why but i need it for the level select fucntion to work properly
                 canvas.width = 1010;
                 ctx.font = "28px Georgia";
-    ctx.fillStyle = "black";
-    ctx.fillText("Press 1,2 or 3 on your keyboard to start the game", 140, 250);
+                ctx.fillStyle = "black";
+                ctx.fillText("Press 1,2 or 3 on your keyboard to start the game", 140, 250);
                 break;
 
             case "gameRun":
                 updateEntities(dt);
                 checkCollisions();
-                
+
                 break;
         }
     }
@@ -141,27 +138,29 @@ var Engine = (function(global) {
                 var selector = 'images/Selector.png';
                 var y = 240;
 
-                numCols = 3;
+                var numCols = 3;
+                var col, row, numRow;
 
-                for (var col = 0; col < numCols; col++) {
+                for (col = 0; col < numCols; col++) {
                     ctx.drawImage(Resources.get(ground), (col * 101) + 250, 240); //101 * 83
                 }
-                level.render();//print the selected level on the screen
+                level.render(); //print the selected level on the screen
                 break;
 
             case "gameRun":
                 var rowImages = [
 
-                        'images/water-block.png', // Top row is water
-                        'images/stone-block.png', // Row 1 of 3 of stone
-                        'images/stone-block.png', // Row 2 of 3 of stone
-                        'images/stone-block.png', // Row 3 of 3 of stone
-                        'images/grass-block.png', // Row 1 of 2 of grass
-                        'images/grass-block.png' // Row 2 of 2 of grass
-                    ],
-                    numRows = 6,
-                    numCols = 10,
-                    row, col;
+                    'images/water-block.png', // Top row is water
+                    'images/stone-block.png', // Row 1 of 3 of stone
+                    'images/stone-block.png', // Row 2 of 3 of stone
+                    'images/stone-block.png', // Row 3 of 3 of stone
+                    'images/grass-block.png', // Row 1 of 2 of grass
+                    'images/grass-block.png' // Row 2 of 2 of grass
+                ];
+
+                numRows = 6;
+                numCols = 10;
+
 
                 /* Loop through the number of rows and columns we've defined above
                  * and, using the rowImages array, draw the correct image for that
@@ -197,8 +196,6 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-
-        
         player.render();
         bridge.render();
 
@@ -209,8 +206,6 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-
-
 
 
     }
